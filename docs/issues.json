@@ -1,0 +1,200 @@
+[
+  {
+    "title": "Agree architecture and milestone dependencies",
+    "owner": "Mahmoud",
+    "stream": "architecture",
+    "deliverable": "Reviewed architecture diagram and decision log",
+    "criteria": [
+      "Document end-to-end boundaries and owners",
+      "Agree source-to-database-to-LLM-to-analytics interfaces",
+      "Record open decisions, budget constraints and proposed milestone sequence"
+    ],
+    "dependencies": "None"
+  },
+  {
+    "title": "Define and review the unified job and skill schema",
+    "owner": "Mahmoud",
+    "stream": "architecture",
+    "deliverable": "Versioned JSON Schema, PostgreSQL mapping and representative fixtures",
+    "criteria": [
+      "Review required/nullable fields, timestamps and IDs with Youssef and David",
+      "Validate Arabic, English, mixed-language and incomplete records",
+      "Define extraction output, taxonomy versions and migration policy"
+    ],
+    "dependencies": "Architecture proposal"
+  },
+  {
+    "title": "Assess Wuzzuf, Forasna, LinkedIn and Bayt access feasibility",
+    "owner": "Youssef",
+    "stream": "data-engineering",
+    "deliverable": "Source feasibility matrix with evidence and collection recommendations",
+    "criteria": [
+      "Assess each source for Egyptian coverage, access method and allowed use",
+      "Record observed limitations, permitted rate limits, available fields and effort",
+      "Recommend feasible sources and fallbacks without bypassing access controls"
+    ],
+    "dependencies": "None"
+  },
+  {
+    "title": "Build pilot Egyptian job collection adapters",
+    "owner": "Youssef",
+    "stream": "data-engineering",
+    "deliverable": "Reproducible pilot collector and externally stored sample",
+    "criteria": [
+      "Implement only approved feasible sources from the source assessment",
+      "Preserve provenance, collection timestamps and source IDs/URLs",
+      "Record per-source counts, failures, retries and missing-field rates"
+    ],
+    "dependencies": "Source assessment and unified schema"
+  },
+  {
+    "title": "Implement validation and data quality reporting",
+    "owner": "Youssef",
+    "stream": "data-engineering",
+    "deliverable": "Validation rules and per-source quality report",
+    "criteria": [
+      "Check schema validity, language, required fields and location coverage",
+      "Quarantine invalid rows with reason codes",
+      "Report missingness and pass rates with reviewed examples"
+    ],
+    "dependencies": "Pilot collection and unified schema"
+  },
+  {
+    "title": "Implement and evaluate cross-source deduplication",
+    "owner": "Youssef",
+    "stream": "data-engineering",
+    "deliverable": "Deduplication pipeline and labeled duplicate/nonduplicate examples",
+    "criteria": [
+      "Combine exact identifiers with evaluated normalized or fuzzy matching",
+      "Preserve all source provenance and avoid silently merging distinct jobs",
+      "Report duplicate rate, precision/recall on reviewed examples and error cases"
+    ],
+    "dependencies": "Pilot collection and quality checks"
+  },
+  {
+    "title": "Design PostgreSQL storage and reproducible loading",
+    "owner": "Youssef",
+    "stream": "data-engineering",
+    "deliverable": "Migrations, loader and setup instructions",
+    "criteria": [
+      "Match accepted job and skill contract with keys and indexes",
+      "Demonstrate idempotent upserts and repeatable load on a small fixture",
+      "Document access configuration, backup plan and secrets handling"
+    ],
+    "dependencies": "Unified schema and deduplication decisions"
+  },
+  {
+    "title": "Measure collection costs and 10,000 unique jobs feasibility",
+    "owner": "Youssef",
+    "stream": "data-engineering",
+    "deliverable": "Evidence-based volume forecast and cost report",
+    "criteria": [
+      "Separate raw listings from unique Egyptian jobs after deduplication",
+      "Estimate yield per source, overlap, throughput and freshness window",
+      "Report observed pilot costs and projected cost/time for 10,000 unique jobs",
+      "State confidence, constraints and go/no-go alternatives; do not guarantee the target"
+    ],
+    "dependencies": "Pilot collection, quality and deduplication evidence"
+  },
+  {
+    "title": "Prototype structured LLM skill extraction",
+    "owner": "David",
+    "stream": "llm-pipeline",
+    "deliverable": "Versioned prompt, extraction pipeline and sample outputs",
+    "criteria": [
+      "Consume the accepted job contract and validate structured output",
+      "Extract skills with source-text evidence on Arabic/English/mixed records",
+      "Handle retries, malformed output and unsupported inferences explicitly"
+    ],
+    "dependencies": "Unified schema and approved representative sample"
+  },
+  {
+    "title": "Build skill taxonomy and normalization mapping",
+    "owner": "David",
+    "stream": "llm-pipeline",
+    "deliverable": "Versioned taxonomy, alias mappings and normalization rules",
+    "criteria": [
+      "Map synonyms, abbreviations and Arabic/English variants to stable IDs",
+      "Separate technical skills, soft skills and other agreed categories",
+      "Preserve raw mentions and unresolved mappings for human review"
+    ],
+    "dependencies": "Unified schema; coordinated with extraction prototype"
+  },
+  {
+    "title": "Create labeled evaluation set and extraction metrics",
+    "owner": "David",
+    "stream": "llm-pipeline",
+    "deliverable": "Annotation guide, reviewed dataset and evaluation report",
+    "criteria": [
+      "Use a representative held-out set with source/language diversity",
+      "Define annotation and disagreement resolution with Mahmoud",
+      "Measure extraction precision/recall/F1 and normalization accuracy",
+      "Document false positives, false negatives and evidence quality; agree thresholds before release"
+    ],
+    "dependencies": "Extraction prototype and taxonomy"
+  },
+  {
+    "title": "Benchmark LLM quality, latency and cost",
+    "owner": "David",
+    "stream": "llm-pipeline",
+    "deliverable": "Measured comparison and recommendation",
+    "criteria": [
+      "Record model/provider and prompt versions, token use, retries and latency",
+      "Calculate observed cost per job and projected cost for 10,000 jobs",
+      "Compare quality against the same evaluation set and document tradeoffs",
+      "Recommend caching/batching and budget controls based on evidence"
+    ],
+    "dependencies": "Evaluation set and extraction prototype"
+  },
+  {
+    "title": "Integrate ingestion, PostgreSQL and skill extraction",
+    "owner": "Mahmoud",
+    "stream": "integration",
+    "deliverable": "Small end-to-end integration demo and interface documentation",
+    "criteria": [
+      "Run a reviewed sample through canonical storage and extraction",
+      "Verify stable job IDs, provenance and versioned outputs",
+      "Demonstrate retry/idempotency and clear failure reporting",
+      "Document configuration and reproducible demo steps"
+    ],
+    "dependencies": "PostgreSQL loader, accepted contract and evaluated extraction"
+  },
+  {
+    "title": "Establish review checklist and acceptance process",
+    "owner": "Mahmoud",
+    "stream": "review",
+    "deliverable": "Agreed PR review policy and deliverable checklist",
+    "criteria": [
+      "Agree evidence required for data, LLM and integration changes",
+      "Confirm reviewers and issue-to-PR-to-board workflow",
+      "Record available branch protection and any enforcement limitations"
+    ],
+    "dependencies": "None"
+  },
+  {
+    "title": "Define analytics questions and metric specifications",
+    "owner": "Mahmoud",
+    "stream": "analytics",
+    "deliverable": "Prioritized analytics requirements and metric definitions",
+    "criteria": [
+      "Define skill demand, role/location/seniority trends and audience",
+      "Specify denominators, deduplication, missing-data handling and freshness",
+      "Label sample/coverage limitations and avoid unsupported market-wide claims",
+      "Agree filters and API data needs with both workstreams"
+    ],
+    "dependencies": "Source feasibility and unified schema"
+  },
+  {
+    "title": "Plan website, API and graduation demo",
+    "owner": "Mahmoud",
+    "stream": "frontend",
+    "deliverable": "Website wireframes, API contract proposal and demo plan",
+    "criteria": [
+      "Prioritize pages, filters, charts and acceptance criteria",
+      "Define API responses aligned with approved analytics metrics",
+      "Estimate implementation, hosting cost and deployment dependencies",
+      "Agree demo scenario and accessibility/responsive requirements"
+    ],
+    "dependencies": "Analytics definitions and integration architecture"
+  }
+]
