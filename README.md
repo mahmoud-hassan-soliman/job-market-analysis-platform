@@ -40,3 +40,13 @@ Commit only small synthetic or approved anonymized fixtures. Use `.env.example` 
 Assess source access and allowed collection methods before building each collector. Do not assume any source can deliver 10,000 unique jobs.
 
 Start with [the task plan](docs/work-plan.md), [the draft data contract](docs/unified-schema.md) and [the architecture](docs/architecture.md).
+
+## GitHub workspace
+
+- [Private repository](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform)
+- [Issues](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues)
+- [Project board](https://github.com/users/mahmoud-hassan-soliman/projects/1/views/3)
+
+Main protection could not be enabled: GitHub returned HTTP 403 and requires GitHub Pro or a public repository. The repository remains private; the review workflow is a team convention until protection is available.
+
+See [the verified setup report](docs/setup-report.md) for what was created and what remains pending.

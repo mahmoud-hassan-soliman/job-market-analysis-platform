@@ -2,7 +2,7 @@
 
 Named owners are planning responsibilities; GitHub assignments await confirmed handles. All new tasks start in To Do. Deadlines and budgets are to be agreed.
 
-## 1. Agree architecture and milestone dependencies
+## [1. Agree architecture and milestone dependencies](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/1)
 
 Owner: Mahmoud · Workstream: architecture
 
@@ -16,7 +16,7 @@ Acceptance criteria:
 - [ ] Agree source-to-database-to-LLM-to-analytics interfaces
 - [ ] Record open decisions, budget constraints and proposed milestone sequence
 
-## 2. Define and review the unified job and skill schema
+## [2. Define and review the unified job and skill schema](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/2)
 
 Owner: Mahmoud · Workstream: architecture
 
@@ -30,7 +30,7 @@ Acceptance criteria:
 - [ ] Validate Arabic, English, mixed-language and incomplete records
 - [ ] Define extraction output, taxonomy versions and migration policy
 
-## 3. Assess Wuzzuf, Forasna, LinkedIn and Bayt access feasibility
+## [3. Assess Wuzzuf, Forasna, LinkedIn and Bayt access feasibility](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/3)
 
 Owner: Youssef · Workstream: data-engineering
 
@@ -44,7 +44,7 @@ Acceptance criteria:
 - [ ] Record observed limitations, permitted rate limits, available fields and effort
 - [ ] Recommend feasible sources and fallbacks without bypassing access controls
 
-## 4. Build pilot Egyptian job collection adapters
+## [4. Build pilot Egyptian job collection adapters](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/4)
 
 Owner: Youssef · Workstream: data-engineering
 
@@ -58,7 +58,7 @@ Acceptance criteria:
 - [ ] Preserve provenance, collection timestamps and source IDs/URLs
 - [ ] Record per-source counts, failures, retries and missing-field rates
 
-## 5. Implement validation and data quality reporting
+## [5. Implement validation and data quality reporting](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/5)
 
 Owner: Youssef · Workstream: data-engineering
 
@@ -72,7 +72,7 @@ Acceptance criteria:
 - [ ] Quarantine invalid rows with reason codes
 - [ ] Report missingness and pass rates with reviewed examples
 
-## 6. Implement and evaluate cross-source deduplication
+## [6. Implement and evaluate cross-source deduplication](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/6)
 
 Owner: Youssef · Workstream: data-engineering
 
@@ -86,7 +86,7 @@ Acceptance criteria:
 - [ ] Preserve all source provenance and avoid silently merging distinct jobs
 - [ ] Report duplicate rate, precision/recall on reviewed examples and error cases
 
-## 7. Design PostgreSQL storage and reproducible loading
+## [7. Design PostgreSQL storage and reproducible loading](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/7)
 
 Owner: Youssef · Workstream: data-engineering
 
@@ -100,7 +100,7 @@ Acceptance criteria:
 - [ ] Demonstrate idempotent upserts and repeatable load on a small fixture
 - [ ] Document access configuration, backup plan and secrets handling
 
-## 8. Measure collection costs and 10,000 unique jobs feasibility
+## [8. Measure collection costs and 10,000 unique jobs feasibility](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/8)
 
 Owner: Youssef · Workstream: data-engineering
 
@@ -115,7 +115,7 @@ Acceptance criteria:
 - [ ] Report observed pilot costs and projected cost/time for 10,000 unique jobs
 - [ ] State confidence, constraints and go/no-go alternatives; do not guarantee the target
 
-## 9. Prototype structured LLM skill extraction
+## [9. Prototype structured LLM skill extraction](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/9)
 
 Owner: David · Workstream: llm-pipeline
 
@@ -129,7 +129,7 @@ Acceptance criteria:
 - [ ] Extract skills with source-text evidence on Arabic/English/mixed records
 - [ ] Handle retries, malformed output and unsupported inferences explicitly
 
-## 10. Build skill taxonomy and normalization mapping
+## [10. Build skill taxonomy and normalization mapping](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/10)
 
 Owner: David · Workstream: llm-pipeline
 
@@ -143,7 +143,7 @@ Acceptance criteria:
 - [ ] Separate technical skills, soft skills and other agreed categories
 - [ ] Preserve raw mentions and unresolved mappings for human review
 
-## 11. Create labeled evaluation set and extraction metrics
+## [11. Create labeled evaluation set and extraction metrics](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/11)
 
 Owner: David · Workstream: llm-pipeline
 
@@ -158,7 +158,7 @@ Acceptance criteria:
 - [ ] Measure extraction precision/recall/F1 and normalization accuracy
 - [ ] Document false positives, false negatives and evidence quality; agree thresholds before release
 
-## 12. Benchmark LLM quality, latency and cost
+## [12. Benchmark LLM quality, latency and cost](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/12)
 
 Owner: David · Workstream: llm-pipeline
 
@@ -173,7 +173,7 @@ Acceptance criteria:
 - [ ] Compare quality against the same evaluation set and document tradeoffs
 - [ ] Recommend caching/batching and budget controls based on evidence
 
-## 13. Integrate ingestion, PostgreSQL and skill extraction
+## [13. Integrate ingestion, PostgreSQL and skill extraction](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/13)
 
 Owner: Mahmoud · Workstream: integration
 
@@ -188,7 +188,7 @@ Acceptance criteria:
 - [ ] Demonstrate retry/idempotency and clear failure reporting
 - [ ] Document configuration and reproducible demo steps
 
-## 14. Establish review checklist and acceptance process
+## [14. Establish review checklist and acceptance process](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/14)
 
 Owner: Mahmoud · Workstream: review
 
@@ -202,7 +202,7 @@ Acceptance criteria:
 - [ ] Confirm reviewers and issue-to-PR-to-board workflow
 - [ ] Record available branch protection and any enforcement limitations
 
-## 15. Define analytics questions and metric specifications
+## [15. Define analytics questions and metric specifications](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/15)
 
 Owner: Mahmoud · Workstream: analytics
 
@@ -217,7 +217,7 @@ Acceptance criteria:
 - [ ] Label sample/coverage limitations and avoid unsupported market-wide claims
 - [ ] Agree filters and API data needs with both workstreams
 
-## 16. Plan website, API and graduation demo
+## [16. Plan website, API and graduation demo](https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/16)
 
 Owner: Mahmoud · Workstream: frontend
 

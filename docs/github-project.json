@@ -1,0 +1,174 @@
+{
+  "closed": false,
+  "fields": {
+    "totalCount": 14
+  },
+  "id": "PVT_kwHOCM7KiM4BmsbA",
+  "items": {
+    "totalCount": 16
+  },
+  "number": 1,
+  "owner": {
+    "login": "mahmoud-hassan-soliman",
+    "type": "User"
+  },
+  "public": false,
+  "readme": "",
+  "shortDescription": "",
+  "title": "Job Market Analysis Platform",
+  "url": "https://github.com/users/mahmoud-hassan-soliman/projects/1",
+  "status_field": {
+    "id": "PVTSSF_lAHOCM7KiM4BmsbAzhlUZAQ",
+    "name": "Status",
+    "databaseId": 424961028,
+    "options": [
+      {
+        "id": "b9607b17",
+        "name": "To Do"
+      },
+      {
+        "id": "b138eb40",
+        "name": "In Progress"
+      },
+      {
+        "id": "057f260c",
+        "name": "In Review"
+      },
+      {
+        "id": "d3477b97",
+        "name": "Done"
+      }
+    ]
+  },
+  "owner_field": {
+    "id": "PVTSSF_lAHOCM7KiM4BmsbAzhlUZlU",
+    "name": "Workstream owner",
+    "databaseId": 424961621,
+    "options": [
+      {
+        "id": "9a921ea6",
+        "name": "Youssef"
+      },
+      {
+        "id": "310f9356",
+        "name": "David"
+      },
+      {
+        "id": "39760ff3",
+        "name": "Mahmoud"
+      }
+    ]
+  },
+  "board_view": {
+    "id": "PVTV_lAHOCM7KiM4BmsbAzgMBmkM",
+    "number": 3,
+    "name": "Delivery Board",
+    "layout": "BOARD_LAYOUT",
+    "verticalGroupByFields": {
+      "nodes": [
+        {
+          "id": "PVTSSF_lAHOCM7KiM4BmsbAzhlUZAQ",
+          "name": "Status"
+        }
+      ]
+    }
+  },
+  "configured_items": [
+    {
+      "issue": 1,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMkUw",
+      "owner": "Mahmoud",
+      "status": "To Do"
+    },
+    {
+      "issue": 2,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMkYQ",
+      "owner": "Mahmoud",
+      "status": "To Do"
+    },
+    {
+      "issue": 3,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMkbM",
+      "owner": "Youssef",
+      "status": "To Do"
+    },
+    {
+      "issue": 4,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMkdo",
+      "owner": "Youssef",
+      "status": "To Do"
+    },
+    {
+      "issue": 5,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMkfk",
+      "owner": "Youssef",
+      "status": "To Do"
+    },
+    {
+      "issue": 6,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMkis",
+      "owner": "Youssef",
+      "status": "To Do"
+    },
+    {
+      "issue": 7,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMklQ",
+      "owner": "Youssef",
+      "status": "To Do"
+    },
+    {
+      "issue": 8,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMkpc",
+      "owner": "Youssef",
+      "status": "To Do"
+    },
+    {
+      "issue": 9,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMkvM",
+      "owner": "David",
+      "status": "To Do"
+    },
+    {
+      "issue": 10,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMk0k",
+      "owner": "David",
+      "status": "To Do"
+    },
+    {
+      "issue": 11,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMk7g",
+      "owner": "David",
+      "status": "To Do"
+    },
+    {
+      "issue": 12,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMohM",
+      "owner": "David",
+      "status": "To Do"
+    },
+    {
+      "issue": 13,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMojc",
+      "owner": "Mahmoud",
+      "status": "To Do"
+    },
+    {
+      "issue": 14,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMolQ",
+      "owner": "Mahmoud",
+      "status": "To Do"
+    },
+    {
+      "issue": 15,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMonY",
+      "owner": "Mahmoud",
+      "status": "To Do"
+    },
+    {
+      "issue": 16,
+      "item_id": "PVTI_lAHOCM7KiM4BmsbAzhAMopU",
+      "owner": "Mahmoud",
+      "status": "To Do"
+    }
+  ]
+}

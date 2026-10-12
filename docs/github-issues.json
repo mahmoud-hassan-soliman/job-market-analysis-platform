@@ -1,0 +1,114 @@
+[
+  {
+    "number": 1,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/1",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbUmg",
+    "owner": "Mahmoud",
+    "title": "Agree architecture and milestone dependencies"
+  },
+  {
+    "number": 2,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/2",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbVlQ",
+    "owner": "Mahmoud",
+    "title": "Define and review the unified job and skill schema"
+  },
+  {
+    "number": 3,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/3",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbWjQ",
+    "owner": "Youssef",
+    "title": "Assess Wuzzuf, Forasna, LinkedIn and Bayt access feasibility"
+  },
+  {
+    "number": 4,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/4",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbXlA",
+    "owner": "Youssef",
+    "title": "Build pilot Egyptian job collection adapters"
+  },
+  {
+    "number": 5,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/5",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbYbg",
+    "owner": "Youssef",
+    "title": "Implement validation and data quality reporting"
+  },
+  {
+    "number": 6,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/6",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbZLw",
+    "owner": "Youssef",
+    "title": "Implement and evaluate cross-source deduplication"
+  },
+  {
+    "number": 7,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/7",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbaNA",
+    "owner": "Youssef",
+    "title": "Design PostgreSQL storage and reproducible loading"
+  },
+  {
+    "number": 8,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/8",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbbNg",
+    "owner": "Youssef",
+    "title": "Measure collection costs and 10,000 unique jobs feasibility"
+  },
+  {
+    "number": 9,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/9",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbcIQ",
+    "owner": "David",
+    "title": "Prototype structured LLM skill extraction"
+  },
+  {
+    "number": 10,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/10",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbd0w",
+    "owner": "David",
+    "title": "Build skill taxonomy and normalization mapping"
+  },
+  {
+    "number": 11,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/11",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbgGQ",
+    "owner": "David",
+    "title": "Create labeled evaluation set and extraction metrics"
+  },
+  {
+    "number": 12,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/12",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbhjg",
+    "owner": "David",
+    "title": "Benchmark LLM quality, latency and cost"
+  },
+  {
+    "number": 13,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/13",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbiVg",
+    "owner": "Mahmoud",
+    "title": "Integrate ingestion, PostgreSQL and skill extraction"
+  },
+  {
+    "number": 14,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/14",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbjIA",
+    "owner": "Mahmoud",
+    "title": "Establish review checklist and acceptance process"
+  },
+  {
+    "number": 15,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/15",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbkcQ",
+    "owner": "Mahmoud",
+    "title": "Define analytics questions and metric specifications"
+  },
+  {
+    "number": 16,
+    "url": "https://github.com/mahmoud-hassan-soliman/job-market-analysis-platform/issues/16",
+    "node_id": "I_kwDOVGFHPM8AAAABWpbmAw",
+    "owner": "Mahmoud",
+    "title": "Plan website, API and graduation demo"
+  }
+]
