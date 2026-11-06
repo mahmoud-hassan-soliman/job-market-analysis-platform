@@ -103,7 +103,7 @@ def load_all():
     valid = [r for r in rows if r["job_id"] and r["title"]]  # validation
     best = {}
     for r in valid:
-        key = f"{norm(r['title'])}|{norm(r['company'])}"
+        key = f"{norm(r['title'])}|{norm(r['company'])}|{r['country']}"
         rank = (SOURCE_RANK[r["source"]], len(r["description"] or ""))
         if key not in best or rank > best[key][0]:
             best[key] = (rank, r)

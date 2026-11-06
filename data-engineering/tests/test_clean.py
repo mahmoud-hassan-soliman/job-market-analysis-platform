@@ -36,3 +36,20 @@ def test_arabic_dates():
     assert parse_arabic_relative("قبل ٣ أسابيع", REF).day == 5
     assert parse_arabic_relative("قبل شهر", REF).month == 9
     assert parse_arabic_relative("???", REF) is None
+
+
+def test_country_resolution():
+    assert country_from_text("Riyadh, Saudi Arabia") == "SA"
+    assert country_from_text("Dubai - United Arab Emirates") == "AE"
+    assert country_from_text("New Cairo, Cairo, Egypt") == "EG"
+    assert country_from_text("Remote") is None
+    assert resolve_country("Remote", fallback="SA") == "SA"
+    assert resolve_country("Sheikh Zayed Road, Dubai", fallback="EG") == "AE"
+
+
+def test_gulf_cities():
+    assert normalize_city("Riyadh, Saudi Arabia") == "Riyadh"
+    assert normalize_city("Sheikh Zayed Road, Dubai, UAE") == "Dubai"
+    assert normalize_city("Jeddah, Makkah Province") == "Jeddah"
+    assert normalize_city("Saudi Arabia") is None
+    assert normalize_city("United Arab Emirates") is None

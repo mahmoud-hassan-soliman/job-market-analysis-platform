@@ -3,6 +3,12 @@ from datetime import datetime, timedelta, timezone
 
 # Governorate-level cities. Order matters: first match wins.
 CITY_KEYWORDS = [
+    ("Riyadh", ["riyadh", "الرياض"]),
+    ("Jeddah", ["jeddah", "jiddah", "جدة"]),
+    ("Dammam", ["dammam", "khobar", "dhahran", "eastern province", "الدمام", "الخبر"]),
+    ("Dubai", ["dubai", "دبي"]),
+    ("Abu Dhabi", ["abu dhabi", "abudhabi", "أبوظبي", "ابوظبي"]),
+    ("Sharjah", ["sharjah", "الشارقة"]),
     ("Alexandria", ["alexandria", "الإسكندرية", "الاسكندرية"]),
     ("Giza", ["giza", "al jizah", "الجيزة", "october", "أكتوبر", "sheikh zayed", "zayed",
               "الشيخ زايد", "dokki", "mohandessin", "smart village"]),
@@ -25,7 +31,7 @@ def normalize_city(raw):
         if w in low:
             return w.title()
     first = low.split(",")[0].strip()
-    if first in ("", "egypt", "eg", "مصر"):
+    if first in ("", "egypt", "eg", "مصر", "saudi arabia", "ksa", "united arab emirates", "uae", "السعودية", "الإمارات"):
         return None
     return first.title()
 
@@ -111,3 +117,29 @@ def parse_arabic_relative(text, ref):
             return ref - timedelta(days=30 * n)
         return ref - timedelta(**{unit: n})
     return None
+
+
+_COUNTRY_WORDS = [
+    ("SA", ["saudi", "ksa", "السعودية", "riyadh", "jeddah", "dammam", "khobar", "الرياض", "جدة", "الدمام"]),
+    ("AE", ["united arab emirates", "uae", "emirates", "dubai", "abu dhabi", "sharjah", "ajman",
+            "دبي", "أبوظبي", "الإمارات"]),
+    ("EG", ["egypt", "مصر", "cairo", "giza", "alexandria", "القاهرة", "الجيزة", "الإسكندرية"]),
+]
+
+
+def country_from_text(text):
+    """'Riyadh, Saudi Arabia' -> 'SA'; None when the text names no known country or city."""
+    low = str(text or "").lower()
+    for code, words in _COUNTRY_WORDS:
+        if any(re.search(r"\b" + re.escape(w) + r"\b", low) for w in words):
+            return code
+    return None
+
+
+def resolve_country(*texts, fallback="EG"):
+    """First country found in the given texts, else the search country."""
+    for t in texts:
+        c = country_from_text(t)
+        if c:
+            return c
+    return fallback

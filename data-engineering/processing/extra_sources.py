@@ -1,6 +1,6 @@
 import re
 from processing.clean import (normalize_city, normalize_country, parse_iso,
-                              parse_relative_date)
+                              parse_relative_date, resolve_country)
 
 def _first_int(s):
     m = re.search(r"\d+", str(s or ""))
@@ -20,7 +20,7 @@ def normalize_linkedin(r):
         "posted_at": _date(r.get("postedAt"), ref),
         "location_raw": r.get("location"),
         "location_city": normalize_city(r.get("location")),
-        "country": normalize_country(None),
+        "country": resolve_country(r.get("location"), fallback=str(r.get("_search_country", "eg")).upper()),
         "is_remote": None,
         "employment_type": r.get("employmentType"),
         "salary_min": None, "salary_max": None, "salary_period": None,
@@ -42,7 +42,7 @@ def normalize_bayt(r):
         "posted_at": parse_relative_date(r.get("postedAtRelative"), ref),
         "location_raw": r.get("location"),
         "location_city": normalize_city(r.get("location")),
-        "country": normalize_country(None),
+        "country": resolve_country(r.get("location"), fallback=str(r.get("_search_country", "eg")).upper()),
         "is_remote": None,
         "employment_type": r.get("jobType"),
         "salary_min": None, "salary_max": None, "salary_period": None,

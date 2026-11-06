@@ -32,3 +32,12 @@ Every API response is cached in `data/raw/`, so re-running a search in the same 
 - Country is set to EG when missing (all queries filter on Egypt).
 - Deduplication is exact `title|company`; overlap across sources may be under-detected.
 - Run all commands from the data-engineering/ folder (paths such as data/raw are relative to it).
+
+## Sprint 2 additions
+- Country per job (EG/SA/AE) from location text; the dedup key now includes country.
+- `ingestion/run_country.py`: Saudi Arabia and UAE collection from LinkedIn (Apify) with a hard budget guard and a spend ledger.
+- `processing/dedup.py`: second-pass near-duplicate detection (flags, never deletes; seniority and number guard).
+- `processing/quality.py`: missing-data % per country and source, `is_valid_for_analysis` flag.
+- Run logs in `logs/` (loading twice gives identical row counts).
+
+Run: `python -m ingestion.run_country --countries sa,ae --cap 100` (dry run), add `--go` to spend; then `python -m processing.load && python -m processing.dedup && python -m processing.quality`.
