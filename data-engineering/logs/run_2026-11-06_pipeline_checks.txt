@@ -1,0 +1,11 @@
+PLAN: sources=['linkedin', 'wuzzuf'] roles=35 cap=50 window=week
+max cost at listed price: $2.31 (real cost is lower when searches return fewer than the cap)
+read=10363 unique=4969 skipped=0 by_source={'apify_wuzzuf': 1156, 'linkedin': 3531, 'jsearch': 101, 'bayt': 181}
+
+VERIFY: total=4969 dated=100% description=100% city=91% newest=2026-11-05
+  PASS  jobs in DB > 0
+  PASS  descriptions >= 90%
+  PASS  posted date >= 90%
+  PASS  newest posting within 14 days
+
+SUMMARY: unique jobs 4969 -> 4969 (+0), estimated cost $0.00
