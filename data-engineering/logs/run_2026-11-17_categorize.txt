@@ -1,0 +1,14 @@
+country | category | jobs | valid
+AE | business | 785 | 774
+AE | cloud | 215 | 211
+AE | it | 178 | 172
+AE | tech | 801 | 779
+EG | business | 755 | 725
+EG | cloud | 128 | 121
+EG | it | 56 | 53
+EG | tech | 282 | 253
+EG | unknown | 3440 | 3361
+SA | business | 744 | 740
+SA | cloud | 150 | 145
+SA | it | 221 | 218
+SA | tech | 473 | 467

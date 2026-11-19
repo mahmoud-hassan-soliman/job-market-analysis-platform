@@ -1,0 +1,3 @@
+searches 63 | raw jobs 6112 | est cost $1.834
+by country: {'eg': 2100, 'sa': 1979, 'ae': 2033}
+tech/IT/cloud raw: 3712 | business raw: 2400

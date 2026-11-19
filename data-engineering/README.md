@@ -41,3 +41,7 @@ Every API response is cached in `data/raw/`, so re-running a search in the same 
 - Run logs in `logs/` (loading twice gives identical row counts).
 
 Run: `python -m ingestion.run_country --countries sa,ae --cap 100` (dry run), add `--go` to spend; then `python -m processing.load && python -m processing.dedup && python -m processing.quality`.
+
+## Update 2026-11-17
+- `processing/categorize.py`: adds `search_role` and `role_category` (tech, cloud, it, business) from the `_search_role` tag in raw LinkedIn files. Older Egypt files and non-LinkedIn sources have no tag, so their category is empty.
+- Logs for the 2026-11-17 collection (63 searches, estimated cost $1.83) and the category counts are in `logs/`.
