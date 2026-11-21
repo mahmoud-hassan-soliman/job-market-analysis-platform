@@ -1,0 +1,7 @@
+# Acceptance test 2026-11-21: load the same saved raw files twice
+8416|df81871de65da5b8ec1212b9a54ebefc
+8416|df81871de65da5b8ec1212b9a54ebefc
+# flagged pairs spanning two cities (must be 0)
+0
+# unit tests
+21 passed in 0.09s

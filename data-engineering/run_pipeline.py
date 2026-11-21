@@ -1,5 +1,5 @@
 """Automated pipeline: collect -> load -> verify. Dry run unless --go."""
-import sys, json, argparse, datetime, requests
+import os, sys, json, argparse, datetime, requests
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
@@ -67,6 +67,26 @@ def verify():
     return checks
 
 
+def print_report(ls):
+    conn = connect(); cur = conn.cursor()
+    cur.execute("""SELECT count(*) FILTER (WHERE review_candidate_of IS NOT NULL),
+        count(*) FILTER (WHERE NOT is_valid_for_analysis),
+        count(*) FILTER (WHERE description IS NULL OR length(description) < 100),
+        count(*) FILTER (WHERE posted_at IS NULL),
+        count(*) FILTER (WHERE location_raw IS NULL),
+        count(*) FILTER (WHERE is_tech = 'tech'), count(*) FILTER (WHERE is_tech = 'non_tech'),
+        count(*) FILTER (WHERE is_tech = 'unknown') FROM jobs""")
+    rev, inval, short, nodate, noloc, t, n, u = cur.fetchone(); conn.close()
+    print("\nRUN REPORT")
+    print(f"  ingested (raw records read)       : {ls['ingested']}")
+    print(f"  stored jobs                       : {ls['stored']}")
+    print(f"  exact duplicates (same source id) : {ls['exact_duplicates']}")
+    print(f"  review candidates (similar ads)   : {rev}  (flagged, kept)")
+    print(f"  rejected at load                  : {sum(ls['rejected'].values())} {ls['rejected']}")
+    print(f"  invalid for analysis              : {inval}  (short description {short}, no date {nodate}, no location {noloc})")
+    print(f"  tech / non_tech / unknown         : {t} / {n} / {u}")
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--go", action="store_true", help="actually collect and load (spends credit)")
@@ -81,14 +101,20 @@ if __name__ == "__main__":
     maxc = sum(len(roles) * (a.cap * SOURCES[s][1] / 1000 + fee(s)) for s in sources)
     print(f"PLAN: sources={sources} roles={len(roles)} cap={a.cap} window={a.window}")
     print(f"max cost at listed price: ${maxc:.2f} (real cost is lower when searches return fewer than the cap)")
-    if not a.go:
-        print("DRY RUN. Add --go to run.")
+    if not a.go and not a.skip_collect:
+        print("DRY RUN (no token needed, nothing spent). Add --go to collect, or --skip-collect to rebuild from saved raw files.")
         sys.exit(0)
+    if a.go and not a.skip_collect and not os.environ.get("APIFY_TOKEN"):
+        sys.exit("APIFY_TOKEN is missing in .env. Collection needs it; --skip-collect does not.")
     before = db_count()
     stats = {} if a.skip_collect else collect(sources, roles, a.cap, a.window)
-    load_all()
+    load_stats = load_all()
+    from processing import dedup, quality, categorize, classify
+    for step in (dedup, quality, categorize, classify):
+        step.main()
     after = db_count()
     checks = verify()
+    print_report(load_stats)
     est = sum(s["est_cost"] for s in stats.values())
     print(f"\nSUMMARY: unique jobs {before} -> {after} (+{after - before}), estimated cost ${est:.2f}")
     Path("data").mkdir(exist_ok=True)
