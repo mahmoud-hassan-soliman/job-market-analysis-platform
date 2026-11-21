@@ -1,0 +1,38 @@
+== Sprint 2 final dedup + quality run 2026-11-06T02:33:44+02:00 ==
+rows=4969 near_duplicates_flagged=101 truly_unique=4868
+flagged by country: {'AE': 20, 'EG': 72, 'SA': 9}
+flagged by source : {'linkedin': 74, 'bayt': 10, 'jsearch': 8, 'apify_wuzzuf': 9}
+--- 8 sample pairs (dropped | kept) ---
+[AE] Oliver Wyman - Digital - AI Product Engineer - Dubai/Abu Dhabi @ Marsh Agency  |  Oliver Wyman - Digital - AI Product Engineer - Dubai/Abu Dhabi @ Oliver Wyman
+[EG] Restaurant Team Leader | IKEA | Mall of Arabia @ Al Futtaim Group  |  Restaurant & Cafe Team Leader | IKEA | Mall of Arabia @ Al Futtaim Group
+[EG] IT Analyst | IKEA | Cairo Festival City @ Al Futtaim Group  |  IT Analyst | IKEA | Cairo Festival City @ Al-Futtaim
+[AE] Forward Deployed AI Engineer, United Arab Emirates - BCG X @ BCG X  |  Forward Deployed AI Scientist, United Arab Emirates - BCG X @ BCG X
+[AE] Software Engineer (Edge - Networking & Fleet) @ Jobgether  |  Software Engineer (Edge - Devices & Mobile) @ Jobgether
+[EG] Software Development Manager (.Net+Angular) @ VeriPark  |  Software Development Manager @ VeriPark
+[EG] Senior Software DevOps Engineer(VOIS) @ VOIS  |  Sr.DevOps Engineer-VOIS @ VOIS
+[EG] Senior Devops Engineer - VOIS @ VOIS  |  Sr.DevOps Engineer-VOIS @ VOIS
+country | source | jobs | miss_title_% | miss_company_% | miss_description_% | miss_location_raw_% | miss_posted_at_% | invalid
+AE | ALL | 738 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 20
+AE | linkedin | 738 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 20
+ALL | ALL | 4969 | 0.0 | 0.0 | 0.0 | 0.0 | 0.1 | 107
+ALL | apify_wuzzuf | 1156 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 9
+ALL | bayt | 181 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 10
+ALL | jsearch | 101 | 0.0 | 0.0 | 0.0 | 0.0 | 5.9 | 14
+ALL | linkedin | 3531 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 74
+EG | ALL | 3703 | 0.0 | 0.0 | 0.0 | 0.0 | 0.2 | 78
+EG | apify_wuzzuf | 1156 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 9
+EG | bayt | 181 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 10
+EG | jsearch | 101 | 0.0 | 0.0 | 0.0 | 0.0 | 5.9 | 14
+EG | linkedin | 2265 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 45
+SA | ALL | 528 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 9
+SA | linkedin | 528 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 9
+{'no_title': 0, 'no_company': 0, 'no_or_short_description': 0, 'no_location': 0, 'no_posted_date': 6, 'near_duplicate': 101, 'VALID_UNIQUE_FOR_ANALYSIS': 4862}
+-- per country/source: total, valid unique
+AE|linkedin|738|718
+EG|apify_wuzzuf|1156|1147
+EG|bayt|181|171
+EG|jsearch|101|87
+EG|linkedin|2265|2220
+SA|linkedin|528|519
+-- junior/senior false positives still flagged (expect 0):
+0

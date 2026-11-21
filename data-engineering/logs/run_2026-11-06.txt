@@ -1,0 +1,76 @@
+== Sprint 2 pipeline run log 2026-11-06T02:31:28+02:00 ==
+-- collection ledger (Apify searches, est. cost USD)
+{"ts": "2026-11-05T15:21:31", "country": "sa", "role": "software engineer", "items": 10, "est_usd": 0.003}
+{"ts": "2026-11-05T15:21:58", "country": "sa", "role": "software engineer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:22:22", "country": "sa", "role": "data engineer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:22:40", "country": "sa", "role": "data scientist", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:23:02", "country": "sa", "role": "devops engineer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:23:17", "country": "sa", "role": "frontend developer", "items": 54, "est_usd": 0.0162}
+{"ts": "2026-11-05T15:23:38", "country": "sa", "role": "backend developer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:23:56", "country": "sa", "role": "cybersecurity engineer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:24:17", "country": "sa", "role": "machine learning engineer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:24:35", "country": "ae", "role": "software engineer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:24:52", "country": "ae", "role": "data engineer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:25:15", "country": "ae", "role": "data scientist", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:25:31", "country": "ae", "role": "devops engineer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:25:45", "country": "ae", "role": "frontend developer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:25:59", "country": "ae", "role": "backend developer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:26:16", "country": "ae", "role": "cybersecurity engineer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:26:30", "country": "ae", "role": "machine learning engineer", "items": 100, "est_usd": 0.03}
+{"ts": "2026-11-05T15:30:15", "country": "sa", "role": "cloud engineer", "items": 70, "est_usd": 0.021}
+{"ts": "2026-11-05T15:30:34", "country": "sa", "role": "solutions architect", "items": 70, "est_usd": 0.021}
+{"ts": "2026-11-05T15:30:49", "country": "sa", "role": "site reliability engineer", "items": 70, "est_usd": 0.021}
+{"ts": "2026-11-05T15:31:06", "country": "sa", "role": "network engineer", "items": 70, "est_usd": 0.021}
+{"ts": "2026-11-05T15:31:26", "country": "sa", "role": "system administrator", "items": 70, "est_usd": 0.021}
+{"ts": "2026-11-05T15:31:37", "country": "ae", "role": "cloud engineer", "items": 70, "est_usd": 0.021}
+{"ts": "2026-11-05T15:31:52", "country": "ae", "role": "solutions architect", "items": 70, "est_usd": 0.021}
+{"ts": "2026-11-05T15:32:04", "country": "ae", "role": "site reliability engineer", "items": 70, "est_usd": 0.021}
+{"ts": "2026-11-05T15:32:20", "country": "ae", "role": "network engineer", "items": 70, "est_usd": 0.021}
+{"ts": "2026-11-05T15:32:32", "country": "ae", "role": "system administrator", "items": 70, "est_usd": 0.021}
+-- rows before
+4969
+-- load run 1
+read=10363 unique=4969 skipped=0 by_source={'apify_wuzzuf': 1156, 'linkedin': 3531, 'jsearch': 101, 'bayt': 181}
+-- rows after load 1
+4969
+-- load run 2 (idempotency check)
+read=10363 unique=4969 skipped=0 by_source={'apify_wuzzuf': 1156, 'linkedin': 3531, 'jsearch': 101, 'bayt': 181}
+-- rows after load 2
+4969
+-- dedup
+rows=4969 near_duplicates_flagged=136 truly_unique=4833
+flagged by country: {'EG': 100, 'AE': 23, 'SA': 13}
+flagged by source : {'jsearch': 9, 'bayt': 11, 'linkedin': 106, 'apify_wuzzuf': 10}
+--- 8 sample pairs (dropped | kept) ---
+[EG] Senior Software Backend Developer - Fluent English Speaker @ BUCHI Laboratory Equipment  |  C# Senior Software Engineer - Fluent English Speaker @ BUCHI Laboratory Equipment
+[EG] Senior Software Testing Engineer | Software Solutions | Egypt @ RAWAJ  |  Senior Software Testing Engineer | Software Solutions | Egypt @ Rawaj - Human Capital Management
+[EG] Junior Software Testing Engineer | Software Solutions | Egypt @ RAWAJ  |  Senior Software Testing Engineer | Software Solutions | Egypt @ Rawaj - Human Capital Management
+[EG] Restaurant Team Leader | IKEA | Mall of Arabia @ Al Futtaim Group  |  Restaurant & Cafe Team Leader | IKEA | Mall of Arabia @ Al Futtaim Group
+[EG] IT Analyst | IKEA | Cairo Festival City @ Al Futtaim Group  |  IT Analyst | IKEA | Cairo Festival City @ Al-Futtaim
+[EG] Talent Acquisition Partner - RETAIL @ Al Futtaim Group  |  Talent Acquisition Partner - RETAIL @ Al-Futtaim
+[EG] Senior Python Engineer @ Nile Bits, LLC.  |  Senior Python Developer @ Nile Bits, LLC
+[EG] Senior Python Developer @ Nile Bits, LLC.  |  Senior Python Developer @ Nile Bits, LLC
+-- quality
+country | source | jobs | miss_title_% | miss_company_% | miss_description_% | miss_location_raw_% | miss_posted_at_% | invalid
+AE | ALL | 738 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 23
+AE | linkedin | 738 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 23
+ALL | ALL | 4969 | 0.0 | 0.0 | 0.0 | 0.0 | 0.1 | 142
+ALL | apify_wuzzuf | 1156 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 10
+ALL | bayt | 181 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 11
+ALL | jsearch | 101 | 0.0 | 0.0 | 0.0 | 0.0 | 5.9 | 15
+ALL | linkedin | 3531 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 106
+EG | ALL | 3703 | 0.0 | 0.0 | 0.0 | 0.0 | 0.2 | 106
+EG | apify_wuzzuf | 1156 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 10
+EG | bayt | 181 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 11
+EG | jsearch | 101 | 0.0 | 0.0 | 0.0 | 0.0 | 5.9 | 15
+EG | linkedin | 2265 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 70
+SA | ALL | 528 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 13
+SA | linkedin | 528 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 13
+{'no_title': 0, 'no_company': 0, 'no_or_short_description': 0, 'no_location': 0, 'no_posted_date': 6, 'near_duplicate': 136, 'VALID_UNIQUE_FOR_ANALYSIS': 4827}
+-- per country/source: total, valid unique
+AE|linkedin|738|715
+EG|apify_wuzzuf|1156|1146
+EG|bayt|181|170
+EG|jsearch|101|86
+EG|linkedin|2265|2195
+SA|linkedin|528|515
