@@ -104,6 +104,23 @@ def internal_id(source, source_job_id):
     return "j_" + hashlib.sha1(f"{source}:{source_job_id}".encode()).hexdigest()[:16]
 
 
+SOURCE_CODE = {"linkedin": "In", "apify_wuzzuf": "WZ", "bayt": "BY", "jsearch": "JS"}
+
+
+def slug(s, n=30):
+    return re.sub(r"[^a-z0-9]+", "", (s or "").casefold())[:n] or "unknown"
+
+
+def make_job_key(r):
+    # readable label: Country_Company_City_PostDate_SourceCode_SourceJobID (job_id stays the stable identity)
+    d = r.get("posted_at")
+    if d is not None and getattr(d, "tzinfo", None) is not None:
+        d = d.astimezone(timezone.utc)
+    date = d.strftime("%Y%m%d") if d is not None else "nodate"
+    return "_".join([r.get("country") or "XX", slug(r.get("company")), slug(r.get("location_city")),
+                     date, SOURCE_CODE.get(r["source"], r["source"][:2].upper()), str(r["job_id"])])
+
+
 def dedupe_by_source_id(rows):
     # same source + same source_job_id = same ad. Richer copy wins, later raw file wins ties.
     best, rejected = {}, Counter()
@@ -125,12 +142,12 @@ def dedupe_by_source_id(rows):
     return kept, stats
 
 
-DB_COLS = ["job_id", "source_job_id", "raw_ref"] + COLUMNS[1:]
+DB_COLS = ["job_id", "source_job_id", "raw_ref", "job_key"] + COLUMNS[1:]
 
 
 def load_all():
     kept, stats = dedupe_by_source_id(read_raw())
-    final = [(internal_id(r["source"], r["job_id"]), r["job_id"], r.get("raw_ref"),
+    final = [(internal_id(r["source"], r["job_id"]), r["job_id"], r.get("raw_ref"), make_job_key(r),
               *[r[c] for c in COLUMNS[1:]]) for r in kept]
     sets = ", ".join(f"{c}=EXCLUDED.{c}" for c in DB_COLS[1:])
     conn = connect()

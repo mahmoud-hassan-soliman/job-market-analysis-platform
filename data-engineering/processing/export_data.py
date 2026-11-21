@@ -5,7 +5,7 @@ from processing.load import SOURCES, connect
 
 GET = {s[0]: s[1] for s in SOURCES}
 NORM = {s[0]: s[2] for s in SOURCES}
-COLS = ["job_id", "source", "source_job_id", "raw_ref", "title", "company", "description", "posted_at",
+COLS = ["job_id", "job_key", "source", "source_job_id", "raw_ref", "title", "company", "description", "posted_at",
         "location_raw", "location_city", "country", "is_remote", "employment_type", "salary_min", "salary_max",
         "salary_period", "apply_link", "publisher", "source_skills", "career_level", "experience_years_min",
         "role", "is_tech", "class_basis", "search_role", "search_category", "is_valid_for_analysis",

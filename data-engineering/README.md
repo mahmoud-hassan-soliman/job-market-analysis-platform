@@ -55,3 +55,8 @@ To find the row of a raw record:
 ## Export for the team
     python -m processing.export_data    # data/export/<date>/: jobs_clean.csv/json, raw_sample.json, sample_mapping.csv, counts.json
 `sample_mapping.csv` links each raw sample record (`sample_index` in `raw_sample.json`) to its row: `job_id`, `source_job_id`, `raw_ref`. `jobs_clean` holds every stored row with its flags; filter `is_valid_for_analysis` for analysis. Legacy: `ingestion/jsearch_client.py`, `run_plan.py` and `queries.py` are the dropped JSearch collector and are not part of the pipeline.
+
+## Readable key
+`job_key` = `Country_Company_City_PostDate_SourceCode_SourceJobID`, for example `EG_valeo_cairo_20261009_In_4449647695`. Source codes: In (LinkedIn), WZ (Wuzzuf), BY (Bayt). Company and city are lowercase without spaces; missing parts are `unknown` / `nodate` / `XX`. It is a readable label: it can change if the company, city or post date is cleaned differently, so join other tables on `job_id`, not on `job_key`.
+
+The source id is kept exactly as the source gives it, so Wuzzuf keys also contain hyphens (UUID ids). Every other part is lowercase letters and digits.

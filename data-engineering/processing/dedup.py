@@ -47,7 +47,7 @@ def main():
     cur = conn.cursor()
     cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS review_candidate_of text")
     cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS review_reason text")
-    cur.execute("SELECT job_id, source, title, company, description, location_city, country FROM jobs")
+    cur.execute("SELECT job_id, source, title, company, description, location_city, country FROM jobs ORDER BY job_id")
     cols = ("key", "source", "title", "company", "desc", "city", "country")
     rows = [dict(zip(cols, r)) for r in cur.fetchall()]
     for r in rows:

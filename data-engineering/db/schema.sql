@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS jobs (
     source        TEXT NOT NULL,
     source_job_id TEXT NOT NULL,             -- the ad's own ID at the source
     raw_ref       TEXT,                      -- raw file path#index the row came from
+    job_key       TEXT,                      -- Country_Company_City_PostDate_SourceCode_SourceJobID
     title         TEXT NOT NULL,
     company       TEXT,
     description   TEXT,
