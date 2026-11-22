@@ -1,4 +1,4 @@
-import os, re, json, glob
+import os, re, json, glob, hashlib
 from collections import Counter
 from datetime import datetime, timezone
 import psycopg2
@@ -82,13 +82,15 @@ SOURCES = [  # (raw folder, how to get the job list from a file, normalizer)
 def read_raw():
     rows = []
     for folder, getter, fn in SOURCES:
-        for f in glob.glob(f"data/raw/{folder}/*.json"):
+        for f in sorted(glob.glob(f"data/raw/{folder}/*.json")):
             d = json.load(open(f))
             ref = (parse_iso(d.get("fetched_at")) if isinstance(d, dict) else None) \
                 or datetime.fromtimestamp(os.path.getmtime(f), tz=timezone.utc)
-            for j in getter(d):
+            for i, j in enumerate(getter(d)):
                 out = fn(j, ref) if folder == "jsearch" else fn(j)
-                rows.append({k: clean(v) for k, v in out.items()})
+                row = {k: clean(v) for k, v in out.items()}
+                row["raw_ref"] = f"{f}#{i}"
+                rows.append(row)
     return rows
 
 
@@ -98,39 +100,63 @@ def connect():
         dbname=os.environ["POSTGRES_DB"])
 
 
+def internal_id(source, source_job_id):
+    return "j_" + hashlib.sha1(f"{source}:{source_job_id}".encode()).hexdigest()[:16]
+
+
+SOURCE_CODE = {"linkedin": "In", "apify_wuzzuf": "WZ", "bayt": "BY", "jsearch": "JS"}
+
+
+def slug(s, n=30):
+    return re.sub(r"[^a-z0-9]+", "", (s or "").casefold())[:n] or "unknown"
+
+
+def make_job_key(r):
+    # readable label: Country_Company_City_PostDate_SourceCode_SourceJobID (job_id stays the stable identity)
+    d = r.get("posted_at")
+    if d is not None and getattr(d, "tzinfo", None) is not None:
+        d = d.astimezone(timezone.utc)
+    date = d.strftime("%Y%m%d") if d is not None else "nodate"
+    return "_".join([r.get("country") or "XX", slug(r.get("company")), slug(r.get("location_city")),
+                     date, SOURCE_CODE.get(r["source"], r["source"][:2].upper()), str(r["job_id"])])
+
+
+def dedupe_by_source_id(rows):
+    # same source + same source_job_id = same ad. Richer copy wins, later raw file wins ties.
+    best, rejected = {}, Counter()
+    for r in rows:
+        if not r["job_id"]:
+            rejected["missing source_job_id"] += 1
+            continue
+        if not r["title"]:
+            rejected["missing title"] += 1
+            continue
+        key = (r["source"], r["job_id"])
+        size = len(r["description"] or "")
+        if key not in best or size >= best[key][0]:
+            best[key] = (size, r)
+    kept = [r for _, r in best.values()]
+    stats = {"ingested": len(rows), "stored": len(kept),
+             "exact_duplicates": len(rows) - sum(rejected.values()) - len(kept),
+             "rejected": dict(rejected)}
+    return kept, stats
+
+
+DB_COLS = ["job_id", "source_job_id", "raw_ref", "job_key"] + COLUMNS[1:]
+
+
 def load_all():
-    rows = read_raw()
-    valid = [r for r in rows if r["job_id"] and r["title"]]  # validation
-    best = {}
-    for r in valid:
-        key = f"{norm(r['title'])}|{norm(r['company'])}|{r['country']}"
-        rank = (SOURCE_RANK[r["source"]], len(r["description"] or ""))
-        if key not in best or rank > best[key][0]:
-            best[key] = (rank, r)
-    final = [(k, *[v[1][c] for c in COLUMNS]) for k, v in best.items()]
+    kept, stats = dedupe_by_source_id(read_raw())
+    final = [(internal_id(r["source"], r["job_id"]), r["job_id"], r.get("raw_ref"), make_job_key(r),
+              *[r[c] for c in COLUMNS[1:]]) for r in kept]
+    sets = ", ".join(f"{c}=EXCLUDED.{c}" for c in DB_COLS[1:])
     conn = connect()
     with conn, conn.cursor() as cur:
-        execute_values(cur, """
-            INSERT INTO jobs (dedup_key, job_id, source, title, company, description,
-              posted_at, location_raw, location_city, country, is_remote, employment_type,
-              salary_min, salary_max, salary_period, apply_link, publisher,
-              source_skills, career_level, experience_years_min)
-            VALUES %s
-            ON CONFLICT (dedup_key) DO UPDATE SET
-              job_id=EXCLUDED.job_id, source=EXCLUDED.source, title=EXCLUDED.title,
-              company=EXCLUDED.company, description=EXCLUDED.description,
-              posted_at=EXCLUDED.posted_at, location_raw=EXCLUDED.location_raw,
-              location_city=EXCLUDED.location_city, country=EXCLUDED.country,
-              is_remote=EXCLUDED.is_remote, employment_type=EXCLUDED.employment_type,
-              salary_min=COALESCE(EXCLUDED.salary_min, jobs.salary_min),
-              salary_max=COALESCE(EXCLUDED.salary_max, jobs.salary_max),
-              salary_period=COALESCE(EXCLUDED.salary_period, jobs.salary_period),
-              apply_link=EXCLUDED.apply_link, publisher=EXCLUDED.publisher,
-              source_skills=EXCLUDED.source_skills, career_level=EXCLUDED.career_level,
-              experience_years_min=EXCLUDED.experience_years_min
-        """, final)
-    by_source = dict(Counter(v[1]["source"] for v in best.values()))
-    print(f"read={len(rows)} unique={len(final)} skipped={len(rows)-len(valid)} by_source={by_source}")
+        execute_values(cur, f"INSERT INTO jobs ({', '.join(DB_COLS)}) VALUES %s "
+                            f"ON CONFLICT (job_id) DO UPDATE SET {sets}", final)
+    stats["by_source"] = dict(Counter(r["source"] for r in kept))
+    print(stats)
+    return stats
 
 
 if __name__ == "__main__":

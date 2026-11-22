@@ -1,4 +1,4 @@
-"""Adds search_role and role_category to jobs from the _search_role tag in raw LinkedIn files."""
+"""Adds search_role and search_category to jobs from the _search_role tag in raw LinkedIn files."""
 import glob, json
 from processing.extra_sources import normalize_linkedin
 from processing.load import connect
@@ -23,7 +23,7 @@ def main():
     conn = connect()
     cur = conn.cursor()
     cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS search_role text")
-    cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS role_category text")
+    cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS search_category text")
     seen = {}
     for f in sorted(glob.glob("data/raw/linkedin/*.json")):
         items = json.load(open(f))
@@ -36,11 +36,11 @@ def main():
             jid = normalize_linkedin(it).get("job_id")
             if jid and jid not in seen:
                 seen[jid] = role
-    cur.execute("UPDATE jobs SET search_role = NULL, role_category = NULL")
-    cur.executemany("UPDATE jobs SET search_role = %s, role_category = %s WHERE source = 'linkedin' AND job_id = %s",
+    cur.execute("UPDATE jobs SET search_role = NULL, search_category = NULL")
+    cur.executemany("UPDATE jobs SET search_role = %s, search_category = %s WHERE source = 'linkedin' AND source_job_id = %s",
                     [(r, category(r), j) for j, r in seen.items()])
     conn.commit()
-    cur.execute("""SELECT country, coalesce(role_category, 'unknown'), count(*),
+    cur.execute("""SELECT country, coalesce(search_category, 'unknown'), count(*),
                    count(*) FILTER (WHERE is_valid_for_analysis)
                    FROM jobs GROUP BY 1, 2 ORDER BY 1, 2""")
     print("country | category | jobs | valid")

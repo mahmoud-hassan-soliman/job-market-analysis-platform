@@ -2,7 +2,7 @@ import os, sys, json, time, hashlib, argparse, datetime, requests
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
-H = {"Authorization": f"Bearer {os.environ['APIFY_TOKEN']}"}
+H = {"Authorization": f"Bearer {os.environ.get('APIFY_TOKEN', '')}"}
 
 ROLES = ["software engineer", "data engineer", "data analyst", "data scientist",
          "machine learning engineer", "devops engineer", "backend developer",

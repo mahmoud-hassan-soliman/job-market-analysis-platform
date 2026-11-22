@@ -16,7 +16,7 @@ def cnorm(s):
 
 
 def tnorm(s):
-    s = re.sub(r"[\(\[].*?[\)\]]", " ", (s or "").lower())
+    s = (s or "").lower()
     s = re.sub(r"\b(m ?/ ?f|f ?/ ?m|remote|hybrid|urgent|hiring|immediate|onsite|on site)\b", " ", s)
     return " ".join(re.sub(r"[^a-z0-9\u0600-\u06ff ]", " ", s).split())
 
@@ -45,9 +45,9 @@ def digits(t):
 def main():
     conn = connect()
     cur = conn.cursor()
-    cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS is_duplicate boolean DEFAULT false")
-    cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS duplicate_of text")
-    cur.execute("SELECT dedup_key, source, title, company, description, location_city, country FROM jobs")
+    cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS review_candidate_of text")
+    cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS review_reason text")
+    cur.execute("SELECT job_id, source, title, company, description, location_city, country FROM jobs ORDER BY job_id")
     cols = ("key", "source", "title", "company", "desc", "city", "country")
     rows = [dict(zip(cols, r)) for r in cur.fetchall()]
     for r in rows:
@@ -80,7 +80,7 @@ def main():
     cross = collections.defaultdict(list)
     for r in rows:
         if r["fp"]:
-            cross[(r["country"], r["t"], r["fp"])].append(r)
+            cross[(r["country"], r["c"], r["city"], r["t"], r["fp"])].append(r)
     for g in cross.values():
         for r in g[1:]:
             union(g[0], r)
@@ -94,9 +94,12 @@ def main():
             win = max(g, key=lambda r: (RANK.get(r["source"], 0), len(r["desc"] or "")))
             flagged += [(r, win) for r in g if r is not win]
 
-    cur.execute("UPDATE jobs SET is_duplicate = false, duplicate_of = NULL")
-    cur.executemany("UPDATE jobs SET is_duplicate = true, duplicate_of = %s WHERE dedup_key = %s",
-                    [(w["key"], r["key"]) for r, w in flagged])
+    flagged = [(r, w) for r, w in flagged
+       if not (r["city"] and w["city"] and r["city"] != w["city"])]
+    cur.execute("UPDATE jobs SET review_candidate_of = NULL, review_reason = NULL")
+    cur.executemany("UPDATE jobs SET review_candidate_of = %s, review_reason = %s WHERE job_id = %s",
+                    [(w["key"], "cross_source" if w["source"] != r["source"] else "same_source_similar", r["key"])
+                     for r, w in flagged])
     conn.commit()
 
     Path("data").mkdir(exist_ok=True)

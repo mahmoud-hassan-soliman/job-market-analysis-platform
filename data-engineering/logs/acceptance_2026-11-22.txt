@@ -1,0 +1,11 @@
+# Acceptance test 2026-11-22: same saved raw files, run twice
+rows=8416 near_duplicates_flagged=378 truly_unique=8038
+8416|8416|df81871de65da5b8ec1212b9a54ebefc
+rows=8416 near_duplicates_flagged=378 truly_unique=8038
+8416|8416|df81871de65da5b8ec1212b9a54ebefc
+# flagged pairs spanning two cities (must be 0)
+0
+# job_key values with characters outside A-Za-z0-9_- (must be 0; source ids may contain hyphens)
+0
+# unit tests
+25 passed in 0.07s

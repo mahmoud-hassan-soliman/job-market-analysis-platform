@@ -7,7 +7,7 @@ FIELDS = ["title", "company", "description", "location_raw", "posted_at"]
 VALID = """(title IS NOT NULL AND btrim(title) <> '' AND company IS NOT NULL AND btrim(company) <> ''
   AND description IS NOT NULL AND length(description) >= 100
   AND location_raw IS NOT NULL AND btrim(location_raw) <> ''
-  AND posted_at IS NOT NULL AND coalesce(is_duplicate, false) = false)"""
+  AND posted_at IS NOT NULL)"""
 
 
 def miss(f):
@@ -17,7 +17,7 @@ def miss(f):
 def main():
     conn = connect()
     cur = conn.cursor()
-    cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS is_duplicate boolean DEFAULT false")
+    cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS review_candidate_of text")
     cur.execute("ALTER TABLE jobs ADD COLUMN IF NOT EXISTS is_valid_for_analysis boolean")
     cur.execute(f"UPDATE jobs SET is_valid_for_analysis = {VALID}")
     conn.commit()
@@ -40,10 +40,10 @@ def main():
         count(*) FILTER (WHERE description IS NULL OR length(description) < 100),
         count(*) FILTER (WHERE location_raw IS NULL OR btrim(location_raw) = ''),
         count(*) FILTER (WHERE posted_at IS NULL),
-        count(*) FILTER (WHERE coalesce(is_duplicate, false)),
+        count(*) FILTER (WHERE review_candidate_of IS NOT NULL),
         count(*) FILTER (WHERE is_valid_for_analysis) FROM jobs""")
     names = ["no_title", "no_company", "no_or_short_description", "no_location", "no_posted_date",
-             "near_duplicate", "VALID_UNIQUE_FOR_ANALYSIS"]
+             "review_candidates", "VALID_FOR_ANALYSIS"]
     print(dict(zip(names, cur.fetchone())))
 
 
